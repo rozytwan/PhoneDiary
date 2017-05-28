@@ -1,0 +1,91 @@
+﻿
+@model IEnumerable<PhoneDirectory.Models.Contact>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("SearchNew", "Contact", FormMethod.Get))
+{<p align="right">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search by parameters" />
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-search"></span>
+    </button>
+    </p>
+}
+<p>
+    @Html.ActionLink("Create New", "AddContact")  
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; @Html.ActionLink("All Contacts", "Index")
+</p>
+<table class="table">
+        <tr>
+            <th>
+                @{ViewBag.ascending = ViewBag.ascending ?? true;}
+                @Html.ActionLink("Contact Name", "SearchNew", "Contact", new { search = ViewBag.search, field = "name", ascending = !ViewBag.ascending }, null)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo2)
+            </th>
+            <th>
+                @{ViewBag.ascending = ViewBag.ascending ?? true;}
+                @Html.ActionLink("Country", "SearchNew", "Contact", new { search = ViewBag.search, field = "Country", ascending = !ViewBag.ascending }, null)
+            </th>
+            <th>
+              @{ViewBag.ascending = ViewBag.ascending ?? true;}
+                @Html.ActionLink("State","SearchNew","Contact", new { search = ViewBag.search, field = "State", ascending = !ViewBag.ascending },null)
+            </th>
+            <th>
+                @{ViewBag.ascending = ViewBag.ascending ?? true;}
+                @Html.ActionLink("Address", "SearchNew", "Contact", new { search = ViewBag.search, field = "Address", ascending = !ViewBag.ascending }, null)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
+               
+                <td>
+                    <img src="~/@Html.DisplayFor(model=>item.Image)" height="40" width="40" />
+               
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country.CountryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State.StateName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditContact", new { id = item.CountryId }) |
+                    @Html.ActionLink("Details", "ViewContact", new { id = item.CountryId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CountryId })
+                </td>
+            </tr>
+        }
+
+    </table>
